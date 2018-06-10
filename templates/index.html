@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>LoRa Google Maps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        }
+        #map {
+        height: 100%;
+        width: 100%;
+        }
+    </style>
+</head>
+<body>
+    
+<div id="map"></div>
+
+<script>
+/*
+refs:
+http://www.oxxostudio.tw/articles/201801/google-maps-4-more-markers.html
+http://www.oxxostudio.tw/articles/201802/google-maps-12-rect-circle.html
+*/
+var map;
+
+var position = [{
+  lat: 24.96715, // hscclab
+  lng: 121.18766
+}, {
+  lat: 24.96822, // lib
+  lng: 121.19437
+}, {
+    lat: 24.97154, // sci5
+    lng: 121.19268
+}];
+
+var num = [0, 0, 0]; // radius
+var circle = [];
+var marker = [];
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: position[1]
+    });
+
+    position.forEach(function(e, i) {
+        circle[i] = new google.maps.Circle({
+            center: e,
+            radius: num[i],// * 10,
+            strokeOpacity: 0,
+            fillColor: '#f00',
+            fillOpacity: 0.35,
+            map: map
+        });
+        marker[i] = new google.maps.Marker({
+            position: e,
+            map: map,
+            label: num[i].toString()
+        });
+    });
+}
+
+function refresh() {
+    let prefix = window.location.protocol + '//' + window.location.host
+    let url = 'distance'
+    let xhr = new XMLHttpRequest()
+    xhr.open('GET', `${prefix}/${url}`)
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            let res = JSON.parse(xhr.responseText)
+            console.log(res)
+            num = [parseInt(res['hscclab']), parseInt(res['lib']), parseInt(res['sci5'])];
+        } else {
+            alert('Request failed.  Returned status of ' + xhr.status)
+        }
+    }
+    xhr.send()
+}
+
+setInterval(function () {
+    refresh()
+    initMap()
+}, 5000)
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap" async defer></script>
+</body>
+</html>
