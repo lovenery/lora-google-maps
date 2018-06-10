@@ -11,6 +11,11 @@ sci5    latitude: 25.0478, longitude: 121.5318
 24.9896,121.3187
 24.988975405763934,121.3138246536255
 25.0478,121.5318
+
+# fail:
+https://stackoverflow.com/questions/20416218/understanding-ibeacon-distancing/20434019
+https://www.ptt.cc/bbs/AndroidDev/M.1453269155.A.FF1.html
+https://gist.github.com/eklimcz/446b56c0cb9cfe61d575
 """
 
 hostname = environ['MQTT_HOST']
