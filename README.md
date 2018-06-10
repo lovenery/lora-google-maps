@@ -17,6 +17,7 @@ pip install -r requirements.txt
 
 ```
 cp local.sh.example local.sh
+./local.sh
 ```
 
 ## Refs
