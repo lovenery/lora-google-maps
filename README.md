@@ -4,7 +4,9 @@
 
 ```shell
 pip install paho-mqtt Flask
+
 or
+
 pip install virtualenv
 virtualenv venv
 source venv/bin/activate

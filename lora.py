@@ -4,6 +4,7 @@ from os import environ
 import paho.mqtt.client as mqtt
 
 """
+LoRa Gateways:
 hscclab latitude: 24.9896, longitude: 121.3187
 lib     latitude: 24.988975405763934, longitude: 121.3138246536255
 sci5    latitude: 25.0478, longitude: 121.5318
