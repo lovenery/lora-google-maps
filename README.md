@@ -22,11 +22,12 @@ cp local.sh.example local.sh
 
 ## Refs
 
-- https://os.mbed.com/teams/MultiTech/code/Dot-Examples/file/2f5ae37e6c47/examples/src/auto_ota_example.cpp/
+- MultiTech Dot
+    - https://os.mbed.com/teams/MultiTech/code/Dot-Examples/file/2f5ae37e6c47/examples/src/auto_ota_example.cpp/
 - Eclipse Paho™ MQTT Python Client
     - https://github.com/eclipse/paho.mqtt.python
     - https://www.eclipse.org/paho/clients/python/docs/
-- https://console.cloud.google.com/
-    -  Maps JavaScript API
+-  Maps JavaScript API
+    - https://console.cloud.google.com/
     -  http://www.oxxostudio.tw/articles/201801/google-maps-4-more-markers.html
     -  http://www.oxxostudio.tw/articles/201802/google-maps-12-rect-circle.html
