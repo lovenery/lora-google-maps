@@ -28,9 +28,9 @@ refs:
 http://www.oxxostudio.tw/articles/201801/google-maps-4-more-markers.html
 http://www.oxxostudio.tw/articles/201802/google-maps-12-rect-circle.html
 */
-var map;
+var map
 
-var position = [{
+var positions = [{
   lat: 24.96715, // hscclab
   lng: 121.18766
 }, {
@@ -39,36 +39,51 @@ var position = [{
 }, {
     lat: 24.97154, // sci5
     lng: 121.19268
-}];
+}]
 
-var num = [0, 0, 0]; // radius
-var circle = [];
-var marker = [];
+var prev_circle_radius = [0, 0, 0]
+var circle_radius = [0, 0, 0] // radius
+var circles = []
+var markers = []
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 16,
-        center: position[1]
-    });
-
-    position.forEach(function(e, i) {
-        circle[i] = new google.maps.Circle({
-            center: e,
-            radius: num[i],
-            strokeOpacity: 0,
-            fillColor: '#f00',
-            fillOpacity: 0.35,
-            map: map
-        });
-        marker[i] = new google.maps.Marker({
-            position: e,
-            map: map,
-            label: num[i].toString()
-        });
-    });
+        center: positions[1]
+    })
+    refresh(function () {
+        updateMarker()
+    })
 }
 
-function refresh() {
+function updateMarker() {
+    positions.forEach(function(e, i) {
+        if (prev_circle_radius[i] != circle_radius[i]) {
+            if (markers[i]) {
+                markers[i].setMap(null)
+            }
+            if (circles[i]) {
+                circles[i].setMap(null)
+            }
+            circles[i] = new google.maps.Circle({
+                center: e,
+                radius: circle_radius[i],
+                strokeOpacity: 0,
+                fillColor: '#f00',
+                fillOpacity: 0.35,
+                map: map,
+            })
+            markers[i] = new google.maps.Marker({
+                position: e,
+                map: map,
+                label: circle_radius[i].toString(),
+                animation: google.maps.Animation.DROP
+            })
+            prev_circle_radius[i] = circle_radius[i]
+        }
+    })
+}
+function refresh(callback) {
     let prefix = window.location.protocol + '//' + window.location.host
     let url = 'distance'
     let xhr = new XMLHttpRequest()
@@ -77,7 +92,8 @@ function refresh() {
         if (xhr.status === 200) {
             let res = JSON.parse(xhr.responseText)
             console.log(res)
-            num = [parseInt(res['hscclab']), parseInt(res['lib']), parseInt(res['sci5'])];
+            circle_radius = [parseInt(res['hscclab']), parseInt(res['lib']), parseInt(res['sci5'])]
+            callback()
         } else {
             alert('Request failed.  Returned status of ' + xhr.status)
         }
@@ -86,8 +102,9 @@ function refresh() {
 }
 
 setInterval(function () {
-    refresh()
-    initMap()
+    refresh(function () {
+        updateMarker()
+    })
 }, 5000)
 
 </script>
