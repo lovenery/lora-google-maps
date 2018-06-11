@@ -28,3 +28,5 @@ cp local.sh.example local.sh
     - https://www.eclipse.org/paho/clients/python/docs/
 - https://console.cloud.google.com/
     -  Maps JavaScript API
+    -  http://www.oxxostudio.tw/articles/201801/google-maps-4-more-markers.html
+    -  http://www.oxxostudio.tw/articles/201802/google-maps-12-rect-circle.html

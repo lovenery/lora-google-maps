@@ -33,7 +33,7 @@ def linear_lstsq(rssi):
 def on_message(mqttc, obj, msg):
     # print('TOPIC:{}, QOS:{}\nPAYLOAD: {}'.format(msg.topic, str(msg.qos), str(msg.payload)))
     j = loads(msg.payload)
-    print('光敏電阻器(0~65535):', int(b64decode(j['data'])))
+    print('Photoresistor(0~65535):', int(b64decode(j['data'])))
 
     for item in j['rxInfo']:
         tmp = linear_lstsq(item['rssi'])
